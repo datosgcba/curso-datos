@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0880)https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=2b7fe09ec4&attid=0.1&permmsgid=msg-f:1637685196121036693&th=16ba3a0250b5d795&view=att&disp=inline&realattid=f_jxhm9ltd0&saddbat=ANGjdJ-SNCnHOMunbdrFW7c_kH543AuP3B8q-dOhPwVHk8DRZFFqDOvXyc-4lktMZzPU2yp84WL6DjUbyH98-1adpE6fynJgpYe1vGfdTLTRK-BxlDFhQV2cM0oqjtI5X8Af1s86P6jUR4nz262FG9qYgpJwxd2JauUF7rGwdzQebhZ180HlpkMC2mPvIHay6XOK5JYJCzMPgtoxzZETteErpZufpFjehvKYW16KpKrFJD36HdPRJHiYXFJaGdD7hnYah5sFnwHb2IRrY-Z8sKmEIdbjhl26lAAgEGiphDIDGyklAcG2Xv4kkCy2QcRSbZZ9Z6CY5aiVoh4uxWV_BbfKLb9YzM54a_tIl4Ge6km7d_S1wRSoLtVXiNmLQ9r1I4vnsqKa2Go5FSM8yHCAzR4Sx6-lHEbjI0203Xhw3SSw7QV0uU3DA5N8DkPaYBUBojpTJBc1E64dCoSRbqV48qE0q3l0c-xJ56pPaPtQ5-U_vdjWarLK9hn57PFTEHfVbllJQu4-ZREFbenEB_Mm0bpsJXLACfN3LcSVCZYgtDulWXPRqRSPK0a__WXDTV_c7_hD6ieT8c10FlZHDw7dB9mmD-AoRho-ATsJ3adK_0Qin7HjLjJ4d7FcXidS8SepgKYtVL8WZjQ6QX5xWQUeNohtJVx6ftV_DY3lCIQNoA -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+
+
+<div>
+
+
+
+
+<div>
+
+
+
+<h1>Status Sumarios</h1>
+<h4>Ignacio</h4>
+<h4>17/5/2019</h4>
+
+</div>
+
+
+<pre><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages ------------------------------<wbr>--------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.1.1       v purrr   0.3.2  
+## v tibble  2.1.1       v dplyr   0.8.0.1
+## v tidyr   0.8.3       v stringr 1.4.0  
+## v readr   1.3.1       v forcats 0.4.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------<wbr>------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>library(readxl)</code></pre>
+<p>##La digitalizaciÃ³n y despapelizaciÃ³n de los Sumarios tramitados por la procuraciÃ³n general</p>
+<p>Los Sumarios administrativos de la Ciudad de Buenos Aires son, entre otras cosas, una importantÃ­sima herramienta de gestiÃ³n de recursos humanos, en tanto configuran el Ãºnico incentivo laboral negativo legal y posible para los trabajadores de la Ciudad. Desgraciadamente la tramitaciÃ³n en Expediente ElectrÃ³nico (SADE) no fue una soluciÃ³n apropiada para los mismos, y para suplir las falencias del sistema, tramitan de manera duplicada en papel impreso.</p>
+<p>Para poder establecer polÃ­ticas de gestiÃ³n apropiadas, se desarrollÃ³ una aplicaciÃ³n especialmente avocada a la tramitaciÃ³n de Sumarios. A pesar de sus numerosos problemas tÃ©cnicos, se encuentra en producciÃ³n hace poco mÃ¡s de un aÃ±o y utilizaremos los datos que otorga para, por primera vez, poder contestar la pregunta Â¿Cuanto tardan los sumarios administrativos en la Ciudad de Buenos Aires?</p>
+<p>A pesar de la escazes de tamaÃ±o de los datos relevados, estos permiten los primeros acercamientos para empezar a establecer cual es la inforaciÃ³n que puede llegar a ser relevante para el decisor, evidenciar problemÃ¡ticas y descubrir limitaciones que pueden llevar a una evoluciÃ³n.</p>
+<p>Lo primero son las cantidades: Cantidad de sumarios abiertos vs cantidad de sumarios finalizados. Cantidad de sumarios por DirecciÃ³n. Cantidad de abogados por Departamento.</p>
+<p>DespuÃ©s vemos tiempos. Tiempos en preinstrucciÃ³n, tiempos en instrucciÃ³n, tiempos en dictamen, tiempos en posdictamen.</p>
+<pre><code>Datos &lt;- read_excel("C:/Users/PG-<wbr>Usuario/Documents/Reporte Sumarios para R.xlsx")</code></pre>
+<pre><code>dfDatos &lt;- as.data.frame(Datos)
+colnames(dfDatos) &lt;- gsub(" ", "_", colnames(Datos))
+names(dfDatos)</code></pre>
+<pre><code>##  [1] "Expediente"               "Sumario"                 
+##  [3] "Regimen"                  "Etapa_actual"            
+##  [5] "Fecha_Apertura"           "Fecha_Inicio_InstrucciÃ³n"
+##  [7] "Abogado_Instructor"       "Fecha_Cierre_InstrucciÃ³n"
+##  [9] "Fecha_Inicio_Dictamen"    "Abogado_Dictaminante"    
+## [11] "Fecha_Cierre_Dictamen"    "Fecha_Cierre_Sumario"    
+## [13] "Fecha_Reingreso"          "Salio_exterior_?"        
+## [15] "ResoluciÃ³n"               "Fecha_ResoluciÃ³n"        
+## [17] "Ministerio_Origen"        "Ministerio_Hecho"        
+## [19] "Reparticion_Hecho"        "Regimen_Externo_?"       
+## [21] "Resolucion_Cierre"        "Se_aplicÃ³_?"             
+## [23] "Tipo_Hecho"               "Fecha_Hecho"</code></pre>
+<p>Lo primero es tratar los datos para cambiar el nombre de las columnas sacando espacios y poniendo guion bajo. Luego seleccionar solamente las columnas Sumario, Fecha de Apertura y Fecha de Cierre de Sumario, y filtrar segÃºn fecha de cierre (igual a NA o no) para obtener cuales son los sumarios abiertos cuales son los sumarios cerrados.</p>
+<pre><code>Sumarios_abiertos &lt;- dfDatos %&gt;% 
+  select(Sumario , Fecha_Apertura , Fecha_Cierre_Sumario) %&gt;% 
+  filter(<a href="http://is.na/" target="_blank">is.na</a>(Fecha_Cierre_<wbr>Sumario))</code></pre>
+<pre><code>Sumarios_cerrados &lt;- dfDatos %&gt;% 
+  select(Sumario , Fecha_Apertura , Fecha_Cierre_Sumario) %&gt;% 
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Fecha_Cierre_<wbr>Sumario))</code></pre>
+<p>DespuÃ©s voy a querer ver los sumarios por direcciÃ³n:</p>
+<pre><code>ggdata_Sumarios_por_Regimen&lt;- dfDatos %&gt;% 
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Regimen)) %&gt;% 
+  group_by(Regimen) %&gt;% 
+  summarise(casos = n())
+
+ggplot(ggdata_Sumarios_por_<wbr>Regimen, aes(x = Regimen, y = casos)) +
+  geom_col()</code></pre>
+<p><img width="672"></p>
+<p>El dato, obviamente, hay que compararlo contra los recursos humanos:</p>
+<pre><code>Recursos_humanos_para_R &lt;- read_excel("C:/Users/PG-<wbr>Usuario/Documents/Recursos humanos para R.xlsx")</code></pre>
+<pre><code>ggdata_Bogas_por_Regimen &lt;- Recursos_humanos_para_R %&gt;% 
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Regimen)) %&gt;%
+  filter(Perfil == "Abogado Instructor" | Perfil == "Abogado Dictaminante") %&gt;% 
+  group_by(Regimen) %&gt;% 
+  summarise(casos = n())
+
+ggplot(data = ggdata_Bogas_por_Regimen, aes(x = Regimen, y = casos)) +
+  geom_col()</code></pre>
+<p><img width="672"></p>
+<p>Si ponemos typeof(dfDatos$Fecha_Apertura) directo en la consola, vemos que R estÃ¡ tratando los datos de las columnas de fechas como âintegerâ y no como fechas. Para que los tomes como fechas hay que transformarlos y que typeof de âdoubleâ. Para transformar las fechas de excel a las fechas de R tenemos que hacer:</p>
+<pre><code>dfDatos &lt;- dfDatos %&gt;%
+  mutate_at(vars(Fecha_Apertura, Fecha_Cierre_Sumario, Fecha_Inicio_InstrucciÃ³n, Fecha_Cierre_InstrucciÃ³n, Fecha_Inicio_Dictamen, Fecha_Cierre_Dictamen, Fecha_Reingreso, Fecha_ResoluciÃ³n, Fecha_Hecho), as.Date, format = "%d/%m/%Y")
+  #as.Date(Fecha_Apertura , format = "%d/%m/%Y") %&gt;% 
+  #as.Date(Fecha_Cierre_Sumario , format = "%d/%m/%Y") %&gt;%
+  #as.Date(Fecha_Inicio_<wbr>InstrucciÃ³n , format = "%d/%m/%Y") %&gt;% 
+  #as.Date(Fecha_Cierre_<wbr>InstrucciÃ³n , format = "%d/%m/%Y") %&gt;% 
+  #as.Date(Fecha_Inicio_Dictamen , format = "%d/%m/%Y") %&gt;% 
+  #as.Date(Fecha_Cierre_Dictamen , format = "%d/%m/%Y") %&gt;% 
+  #as.Date(Fecha_ResoluciÃ³n , format = "%d/%m/%Y") %&gt;% 
+  #as.Date(Fecha_Hecho, format = "%d/%m/%Y")</code></pre>
+<p>Ahora que tenemos todas las columnas de fecha como fecha, agregamos la columna que nos dice cual es el plazo de cierre del sumario, restando la Fecha de cierre de la fecha de apertura.</p>
+<pre><code>dfDatos &lt;- mutate(dfDatos, Plazo_Sumario = Fecha_Cierre_Sumario - Fecha_Apertura)</code></pre>
+<p>Vamos a ver cual es el plazo promedio para el trÃ¡mite de un sumario:</p>
+<pre><code>dfDatos %&gt;% 
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Fecha_Cierre_<wbr>Sumario)) %&gt;% 
+  summarise(mean(Plazo_Sumario))</code></pre>
+<pre><code>##   mean(Plazo_Sumario)
+## 1       178.8214 days</code></pre>
+<p>Y ahora vamos a ver cual es el plazo promedio para cada tipo de hecho que tenemos registrado donde hubo un cierre:</p>
+<pre><code>dfDatos %&gt;% 
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Fecha_Cierre_<wbr>Sumario)) %&gt;% 
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Tipo_Hecho)) %&gt;% 
+  group_by(Tipo_Hecho) %&gt;% 
+  summarise(mean(Plazo_Sumario))</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   Tipo_Hecho             `mean(Plazo_Sumario)`
+##   &lt;chr&gt;                  &lt;time&gt;               
+## 1 Hurto                  177.1875 days        
+## 2 Irregularidades Varias 242.0000 days        
+## 3 Ley 1225               176.0000 days        
+## 4 Otros                  198.3333 days        
+## 5 Sustraccion De Bienes  142.3333 days        
+## 6 Varios                 137.0000 days</code></pre>
+<p>Pero debido a las mÃºltiples fallas del software con el que estamos trabajando, lo cierto es que hay muchos mÃ¡s sumarios cerrados que los registrados por el sistema. Vamos a ver cuanto tiempo promedio hay entre el cierre de dictamen de un sumario, y el efectivo cierre del sumario, y si la diferencia entre la fecha de hoy y el cierre de dictamen es mayor al promedio, el usuario asignado es RRUGIERO (Director General) presumir que ese sumario se cerrÃ³. Pero como tenemos algunos valores outliers, primero vamos a hacer un boxplot para detectarlos y sacarlos de nuestra presunciÃ³n:</p>
+<pre><code>ggPresuncion &lt;- dfDatos %&gt;%
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Fecha_Cierre_<wbr>Sumario)) %&gt;% 
+  mutate(Plazo_Diferencia_<wbr>Cierre_Dictamen = Fecha_Cierre_Sumario - Fecha_Cierre_Dictamen) %&gt;% 
+  select(Plazo_Diferencia_<wbr>Cierre_Dictamen)
+
+ggplot(as.data.frame(<wbr>ggPresuncion), aes(y = Plazo_Diferencia_Cierre_<wbr>Dictamen))+
+  geom_boxplot()+
+  scale_y_continuous(breaks =seq(0,60,2))</code></pre>
+<p><img width="672"></p>
+<p>Ahora que sabemos que si estÃ¡ por encima de 12 dÃ­as, o por debajo de 1 es un outlier, vamos a calcular cual es el promedio de los que estÃ¡n efectivamente dentro de la âboxâ del boxplot.</p>
+<p>Ahora si, entonces, vamos a calcular cuanto tiempo tarda en cerrar un sumario promedio, diciÃ©ndole a R que si pasaron &gt;12 dÃ­as del cierre del dictamen, me lo considere cerrado.</p>
+<pre><code>dfDatos %&gt;% 
+  mutate(Plazo_Presunto_Sumario = Fecha_Cierre_Dictamen - Fecha_Apertura + 12) %&gt;% 
+  filter(!<a href="http://is.na/" target="_blank">is.na</a>(Plazo_Presunto_<wbr>Sumario)) %&gt;% 
+  summarise(mean(Plazo_Presunto_<wbr>Sumario))</code></pre>
+<pre><code>##   mean(Plazo_Presunto_Sumario)
+## 1                 172.519 days</code></pre>
+<p>Con este resultado, tenemos por primera vez en la historia del Gobierno de la Ciudad de Buenos Aires datos sobre Sumarios administrativos. Aplausos por favor.</p>
+<p>Es solo un primer paso, y me queda el trabajo prÃ¡ctico incompleto. A continuaciÃ³n, tendrÃ­a que buscar cuales son los tipos de faltas que tardan mÃ¡s en ser resueltas, buscar quÃ© pasa con los Sumarios que se cierran sin resoluciÃ³n (de Archivo) por falta de elementos de investigaciÃ³n. TambiÃ©n existe una tabla con las personas asociadas a sumarios, ya sea como abogados defensores, testigos o imputados. TambiÃ©n conseguir la ubicaciÃ³n de las reparticiones contenidas en la tabla de la que se alimenta el software para poder visualizar en un mapa donde es que se producen los hechos que ocasionan un sumario, y verlo por densidad, ya que vamos, presumiblemente, a tener puntos calientes en los hospitales, escuelas y ministerios grandes. La columna reparticiÃ³n del hecho contiene el dato que me dice en quÃ© lugar sucediÃ³ el hecho. Si obtenemos cuales son los valores Ãºnicos que encontramos en dicha columna, le podemos pedir a la USIG la ubicaciÃ³n de dichas reparticiones. Luego hacemos un join_left, y ya tenemos los sumarios geolocalizdos y listos para mapear. SerÃ­a interesante ver si se pueden utilizar los datos geolocalizados como parte de la investigaciÃ³n de sumarios. Ejemplifico: Muchos Sumarios cerrados por falta de elementos investigativos de hurtos en escuelas de una misma zona pueden ser elementos para buscar quÃ© personas se desempeÃ±an en esas mismas escuelas e intentar achicar la lista de posibles sospechosos.</p>
+<p>Con toda esta informaciÃ³n se pueden buscar maneras de gestionar mejor los sumarios administrativos como herramienta de recursos humanos de la Ciudad.</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+</body></html>
