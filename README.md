@@ -3,6 +3,6 @@
 
 [Web con información del Curso](https://datosgcba.github.io/curso-datos/) realizado por la Dirección General de Calidad Institucional y Gobierno Abierto - Secretaría General y Relaciones Internacionales.
 
-El curso fue realizado por Antonio Vázquez Brust, dictado en conjunto con Natsumi Shokida.
+El curso fue realizado por Antonio Vázquez Brust, dictado en conjunto con Natsumi Shokida y Lautaro Cantar.
 
 Cualquier duda o consulta podés escribir a [gobiernoabierto@buenosaires.gob.ar](mailto:gobiernoabierto@buenosaires.gob.ar).
